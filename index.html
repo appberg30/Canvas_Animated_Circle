@@ -2,39 +2,46 @@
 <html>
     <head>
     	<link rel="stylesheet" href="style.css">
-      <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     </head>
     <body>
 		<div id="container">
-			<canvas id="myCanvas" height="450" width="450"></canvas>
+			<canvas id="myCanvas"></canvas>
 		</div>
 		<script>
 			$(document).ready(function(){
 				var mainCanvas = document.querySelector("#myCanvas");
 				var mainContext = mainCanvas.getContext("2d");
-				 
-				var canvasWidth = mainCanvas.width;
-				var canvasHeight = mainCanvas.height;
+				mainCanvas.width = window.innerWidth;
+				mainCanvas.height = window.innerHeight;
+				var canvasWidth = window.innerWidth;
+				var canvasHeight = window.innerHeight;
 				var angle = 0;
+				var x= 100;
+				var y=200;
+				var dx=5;
+				var dy=5;
 				var requestAnimationFrame = window.requestAnimationFrame || 
                             window.mozRequestAnimationFrame || 
                             window.webkitRequestAnimationFrame || 
                             window.msRequestAnimationFrame;
-				 
+				var getWindowOffset = document.documentElement.offsetHeight;
 				function drawCircle() {
 					mainContext.clearRect(0, 0, canvasWidth, canvasHeight);
-     
 					// color in the background
 					mainContext.fillStyle = "#000000";
 					mainContext.fillRect(0, 0, canvasWidth, canvasHeight);
 					 
 					// draw the circle
 					mainContext.beginPath();
-					
-					var radius = 15 + 150 * Math.abs(Math.cos(angle));
-					mainContext.arc(225, 225, radius, 0, Math.PI * 2, false);
-					angle += Math.PI / 64;
+					mainContext.arc(x, y, 50, 0, Math.PI * 2, false);
+					var widthParameter = canvasWidth - 100;
+					var heightParameter = canvasHeight - 100;
+					if( x<0 || x> widthParameter) dx=-dx; 
+					if( y<0 || y> heightParameter) dy=-dy; 
+					x+=dx; 
+					y+=dy;
 					mainContext.closePath();
 					 
 					// color in the circle
